@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Form</title>
+    <style>
+        /* Body Styles */
+        body {
+            background-color: lightslategray;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        /* Form Styling */
+        form {
+            background-color: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 60%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Input Fields */
+        input[type="text"],
+        input[type="number"],
+        input[type="email"] {
+            padding: 8px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Submit Button Styling */
+        button[type="submit"] {
+            background-color: black;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        /* Button Hover Effect */
+        button[type="submit"]:hover {
+            opacity: 0.8;
+        }
+
+        /* Table Styling */
+        table {
+            background-color: lightgray;
+            padding: 10px;
+            border-spacing: 0;
+            border-collapse: collapse;
+            margin: 20px auto;
+            width: 80%;
+        }
+
+        /* Table Cell and Header Styling */
+        td,
+        th {
+            padding: 10px;
+            border: 3px solid white;
+            text-align: center;
+        }
+
+        /* Delete Button Styling */
+        .delete-button {
+            background-color: white;
+            color: black;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body align="center">
+    <h1>STUDENT FORM</h1>
+    <form id="studentForm">
+        <table border="1" align="center">
+            <tr>
+                <td><span>Name:</span></td>
+                <td><input type="text" id="name" required></td>
+            </tr>
+            <tr>
+                <td><span>Age:</span></td>
+                <td><input type="number" id="age" required></td>
+            </tr>
+            <tr>
+                <td><span>Gender:</span></td>
+                <td>
+                    <input type="radio" name="gender" value="Male" required>Male
+                    <input type="radio" name="gender" value="Female">Female
+                </td>
+            </tr>
+            <tr>
+                <td><span>Course:</span></td>
+                <td><input type="text" id="course" required></td>
+            </tr>
+            <tr>
+                <td><span>Email:</span></td>
+                <td><input type="email" id="email" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button></td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <table align="center" border="1" id="studentTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Course</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <script>
+        document.getElementById('studentForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const course = document.getElementById('course').value;
+            const email = document.getElementById('email').value;
+
+            // Create new row and cells
+            const table = document.getElementById('studentTable').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            // Insert cells for each piece of data
+            newRow.insertCell(0).textContent = name;
+            newRow.insertCell(1).textContent = age;
+            newRow.insertCell(2).textContent = gender;
+            newRow.insertCell(3).textContent = course;
+            newRow.insertCell(4).textContent = email;
+
+            // Create delete button
+            const actionCell = newRow.insertCell(5);
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            deleteButton.classList.add('delete-button');
+
+            // Event listener for deleting the row
+            deleteButton.addEventListener('click', function (event) {
+                const row = event.target.closest('tr'); // Find the closest table row
+                row.remove(); // Remove the row
+            });
+
+            actionCell.appendChild(deleteButton);
+
+            // Clear form after submission
+            document.getElementById('studentForm').reset();
+        });
+
+    </script>
+</body>
+
+</html>
